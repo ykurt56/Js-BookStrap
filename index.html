@@ -1,0 +1,409 @@
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BookStrap</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/737fc3d169.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="shortcut icon" href="img/bookstrap.ico" type="image/x-icon" />
+  </head>
+
+  <body>
+    <nav class="navbar bg-body-tertiary fixed-top navbar-expand-lg">
+      <div class="container">
+        <div class="rounded mx-auto d-block">
+          <a class="navbar-brand" href="#">
+            <img
+              src="img/bookstrap.png"
+              alt="Logo"
+              width="30"
+              height="24"
+              class="d-inline-block align-text-top"
+            />
+            BookStrap
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 my-auto text-center">
+            <h1>BookStrap <br />Kitaplığına <br />Hoşgeldiniz</h1>
+          </div>
+          <div class="col-md-6 d-none d-md-block">
+            <img
+              src="https://images.pexels.com/photos/2908984/pexels-photo-2908984.jpeg"
+              alt=""
+              srcset=""
+              height="300"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <nav class="navbar bg-body-tertiary navbar-expand-lg">
+      <div class="container">
+        <div class="container p-3 mt-3">
+          <div class="row">
+            <div class="col-md-2 col-sm-12">
+              <h3>Kitap Listesi</h3>
+            </div>
+            <div class="col-md-8 col-sm-12">
+              <div class="row">
+                <div class="col-md-2 col-sm-4">
+                  <div class="dropdown" id="sort">
+                    <a
+                      class="btn btn-dark dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa-solid fa-sort-alpha-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          onclick="sorting.sortAZ()"
+                          href=" #"
+                          >A - Z</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          onclick="sorting.sortZA()"
+                          href=" #"
+                          >Z - A</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-8 col-sm-4">
+                  <input
+                    type="search"
+                    name=""
+                    id="inputSearch"
+                    placeholder="Kitap ara..."
+                    class="form-control mb-3 search-input"
+                    oninput="search.searchBooks()"
+                  />
+                </div>
+                <div class="col-md-2 col-sm-4">
+                  <div class="dropdown" id="sort">
+                    <a
+                      class="btn btn-dark dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa-solid fa-filter"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                      <div
+                        class="d-flex justify-content-between filter-section"
+                      >
+                        <div class="left">
+                          <p class="fw-bold">Category</p>
+                          <div id="categoryFilterArea">
+                            <select
+                              id="categoryFilter"
+                              onchange="Filter.categoryFilter()"
+                            >
+                              <!-- Kategoriler buraya dinamik olarak eklenecek -->
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between filter-section"
+                      >
+                        <div class="right">
+                          <p class="fw-bold">Writers</p>
+                          <div id="writerFilterArea">
+                            <select
+                              id="writerFilter"
+                              onchange="Filter.writerFilter()"
+                            ></select>
+                          </div>
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-12">
+              <!-- Kitap Ekle Butonu -->
+              <button
+                type="button"
+                class="btn btn-dark"
+                data-bs-toggle="modal"
+                data-bs-target="#addBookModal"
+              >
+                <i class="fa-solid fa-plus"></i> Kitap Ekle
+              </button>
+
+              <!-- Kitap Ekleme Modalı -->
+              <div
+                class="modal fade"
+                id="addBookModal"
+                tabindex="-1"
+                aria-labelledby="addBookModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addBookModalLabel">
+                        Kitap Ekle
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="addBookForm">
+                        <div class="mb-3">
+                          <label for="addTitle" class="form-label"
+                            >Kitap Adı</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="addTitle"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="addAuthor" class="form-label"
+                            >Yazar Adı</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="addAuthor"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="addYear" class="form-label">Yıl</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            id="addYear"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="addCategory" class="form-label"
+                            >Kategori</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="addCategory"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="addDescription" class="form-label"
+                            >Açıklama</label
+                          >
+                          <textarea
+                            class="form-control"
+                            id="addDescription"
+                            rows="3"
+                          ></textarea>
+                        </div>
+                        <div class="mb-3">
+                          <label for="addImageUrl" class="form-label"
+                            >Resim URL</label
+                          >
+                          <input
+                            type="url"
+                            class="form-control"
+                            id="addImageUrl"
+                            required
+                          />
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Kapat
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="UI.addBook()"
+                      >
+                        Ekle
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <section class="menu">
+        <div class="title">
+          <h2 class="text-center mb-5 text-dark">
+            BookStrap <i class="fa-solid fa-book"></i>
+            <span id="bookName"></span> Kitapları
+          </h2>
+        </div>
+      </section>
+    </div>
+
+    <section class="booklist">
+      <div class="container">
+        <div class="row" id="bookCards">
+          <!-- Kitap Kartları Şablonu -->
+          <!-- <div class="col-lg-3 col-md-4 col-xs-12 col-sm-6">
+            <div class="card mb-4">
+              <img src="https://picsum.photos/id/237/200/300" class="card-img-top card_img" alt="book.title">
+              <div class="card-body">
+                <h5 class="card-title">Namık Hikmet</h5>
+                <p class="card-text">book.description</p>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><strong>Yazar:</strong> asdsadsa</li>
+                  <li class="list-group-item"><strong>Yıl:</strong> book.year</li>
+                  <li class="list-group-item"><strong>Kategori:</strong> book.category</li>
+                </ul>
+                <div class="btn-group mt-3">
+                  <button class="btn btn-danger" onclick="deleteBook(this)">Sil</button>
+                  <button class="btn btn-primary" onclick="editBook(this)">Düzenle</button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Kitap Düzenleme Modalı -->
+    <div
+      class="modal fade"
+      id="editBookModal"
+      tabindex="-1"
+      aria-labelledby="editBookModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editBookModalLabel">Kitap Düzenle</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="editBookForm">
+              <div class="mb-3">
+                <label for="editTitle" class="form-label">Kitap Adı</label>
+                <input type="text" class="form-control" id="editTitle" />
+              </div>
+              <div class="mb-3">
+                <label for="editAuthor" class="form-label">Yazar Adı</label>
+                <input type="text" class="form-control" id="editAuthor" />
+              </div>
+              <div class="mb-3">
+                <label for="editYear" class="form-label">Yıl</label>
+                <input type="number" class="form-control" id="editYear" />
+              </div>
+              <div class="mb-3">
+                <label for="editCategory" class="form-label">Kategori</label>
+                <input type="text" class="form-control" id="editCategory" />
+              </div>
+              <div class="mb-3">
+                <label for="editDescription" class="form-label">Açıklama</label>
+                <textarea
+                  class="form-control"
+                  id="editDescription"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="editImageUrl" class="form-label">Resim URL</label>
+                <input
+                  type="url"
+                  class="form-control"
+                  id="editImageUrl"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              İptal
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="storage.confirmEdit()"
+            >
+              Onayla
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="col-12 bg-dark text-center text-white">
+      <div
+        class="col-12 text-center p-3"
+        style="background-color: rgba(0, 0, 0, 0.2)"
+      >
+        <p>BookStrap İle Dijital Kütüphaneni Oluştur.</p>
+        © 2024 Copyright <i class="fa-solid fa-heart"></i>
+        <a class="text-white" href="https://github.com/ykurt56">Yusuf Kurt</a>
+      </div>
+    </footer>
+    <script src="js/search.js"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/sorting.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/storage.js"></script>
+    <!-- <script src="js/app.js"></script> -->
+    <script src="js/books.json"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
